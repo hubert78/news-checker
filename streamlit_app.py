@@ -76,7 +76,7 @@ if 'gw_response' in st.session_state and 'jn_response' in st.session_state and c
     # Check if input Date is valid for scrapping.
     if gw_start_date < gw_end_date or jn_start_date < jn_end_date:
         st.info('Select an End Date older or equal to Start Date')
-    elif gw_start_date > datetime.now().date() or jn_start_date > datetime.now().date():
+    elif gw_start_date.date() > datetime.now().date() or jn_start_date > datetime.now().date():
         st.info('Start Date cannot be in the future')
     else:
         st.write(gw_start_date)
