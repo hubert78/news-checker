@@ -148,17 +148,7 @@ if start_scraping == True:
 if articles is not None and not articles.empty:
     st.write(articles.head())
     with st.spinner(f'Processing data for plagiarism comparison'):
-        # Download NLTK resources
-        nltk.download('stopwords')
-        nltk.download('punkt')
-        nltk.download('wordnet')
-        nltk.download('averaged_perceptron_tagger')
-        
-        # Set of English stopwords
-        stop_words = set(stopwords.words('english'))
 
-        # Initialize WordNet Lemmatizer
-        lemmatizer = WordNetLemmatizer()
 
         articles['Processed_Content'] = articles['Content'].apply(clean_text)
 
