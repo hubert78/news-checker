@@ -19,12 +19,14 @@ def joynews_form():
 
 col1, col2 = st.columns(2)
 with col1:
-  if st.button('Ghanaweb'):
+  gw_button = st.button('Ghanaweb')
+  if gw_button:
     gw_num = ghanaweb_form()
     
 with col2:
-  if st.button('Joy News'):
+  jn_button = st.button('Joy News')
+  in jn_button:
     jn_num = joynews_form()
 
-
-st.write(int(gw_num) + int(jn_num))
+if gw_button and jn_button:
+  st.write(int(gw_num) + int(jn_num))
