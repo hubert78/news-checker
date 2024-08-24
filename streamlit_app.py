@@ -36,7 +36,7 @@ def joynews_form():
     business = st.multiselect('Make a selection', cat_business)
     entertainment = st.multiselect('Make a selection', cat_entertainment)
     sports = st.multiselect('Make a selection', cat_sports)
-    opinion = st.selectbox('Make a selection', opinion)
+    opinion = st.selectbox('Make a selection', cat_opinion)
     
     jn_num = st.text_input('Enter number')
     jn_submit = st.button('Submit')
