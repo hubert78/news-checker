@@ -23,29 +23,19 @@ def ghanaweb_form():
 # Joy News form
 @st.dialog('Joy News')
 def joynews_form():
-    cat_news = ["national", "politics", "crime", "africa" "regional", "technology", "oddly-enough", "diaspora", "international", "health", "education", "obituary"]
-    cat_business = ["economy", "energy", "finance", "investments", "mining", "agribusiness", "real-estate", "stocks", "telecom", "aviation", "banking", "technology-business"]
-    cat_entertainment = ["movies", "music", "radio-tv", "stage", "art-design", "books"]
-    cat_sports = ["football", "boxing", "athletics", "tennis", "golf", "other-sports"]
-    cat_opinion = ["Opinion", None]
-    
-    
+    categories = ['news', 'business', 'entertainment', 'sports', 'opinion']
+
     jn_start_date = st.date_input('Start date')
     jn_end_date = st.date_input('End date')
-    st.write('Select Categories')
-    news = st.multiselect('News', cat_news)
-    business = st.multiselect('Business', cat_business)
-    entertainment = st.multiselect('Entertainment', cat_entertainment)
-    sports = st.multiselect('Sports', cat_sports)
-    opinion = st.selectbox('Opinion', cat_opinion)
+    jn_categories = st.multiselect('Select Categories', cateogories)
+
     
     jn_num = st.text_input('Enter number')
     jn_submit = st.button('Submit')
     if jn_submit:
         st.session_state['jn_response'] = {'start_date': jn_start_date,
                                            'end_date': jn_end_date,
-                                           'jn_categories': {'news': news, 'business': business, 'entertainment': entertainment,
-                                                             'sports': sports, 'opinion': opinion},
+                                           'jn_categories': jn_categories
                                            'jn_num': jn_num,
                                           }
         st.rerun()
