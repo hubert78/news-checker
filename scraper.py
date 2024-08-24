@@ -188,3 +188,30 @@ def joynews_scraper(category, sub_category, end_date):
     else:
         print(f"No data was retrieved for {category}.")
         return pd.DataFrame(columns=["Source", "Category", "Date Posted", "Title", "URL", "Content"])
+
+
+
+
+# Function for preprocessing
+def clean_text(text):
+    text = text.lower()
+
+    # Remove HTML tags
+    text = re.sub(r'<.*?>', '', text)
+
+    # Remove non-alphabetic characters, except spaces
+    text = re.sub(r'[^a-z\s]', '', text)
+
+    # Tokenization (split the text into words)
+    tokens = nltk.word_tokenize(text)
+
+    # Remove stopwords and words with length <= 1
+    tokens = [word for word in tokens if word not in stop_words and len(word) > 1]
+
+    # Lemmatization using Spacy
+    lemmatized_tokens = [token.lemma_ for token in nlp(" ".join(tokens))]
+
+    # Rejoin tokens into a single string
+    cleaned_text = " ".join(lemmatized_tokens)
+
+    return cleaned_text
