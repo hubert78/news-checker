@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import os
 
 import requests
 from bs4 import BeautifulSoup
@@ -198,17 +199,7 @@ def joynews_scraper(category, sub_category, end_date):
 
 
 
-def download_nltk_data():
-    try:
-        find('corpora/stopwords.zip')
-        find('tokenizers/punkt.zip')
-        find('corpora/wordnet.zip')
-        find('taggers/averaged_perceptron_tagger.zip')
-    except LookupError:
-        nltk.download('stopwords')
-        nltk.download('punkt')
-        nltk.download('wordnet')
-        nltk.download('averaged_perceptron_tagger')
+
 
 # download_nltk_data()
 
@@ -230,7 +221,10 @@ def get_wordnet_pos(word):
     return tag_dict.get(tag, wordnet.NOUN)
 
 def clean_text(text):
-    download_nltk_data()
+    os.environ['NLTK_DATA'] = './nltk_data'
+    
+    # Verify that NLTK can access the data
+    nltk.data.path.append('./nltk_data')
 
     # Set of English stopwords
     stop_words = set(stopwords.words('english'))
