@@ -32,19 +32,19 @@ def joynews_form():
     jn_start_date = st.date_input('Start date')
     jn_end_date = st.date_input('End date')
     st.write('Select Categories')
-    'news' = st.multiselect('Make a selection', cat_news)
-    'business' = st.multiselect('Make a selection', cat_business)
-    'entertainment' = st.multiselect('Make a selection', cat_entertainment)
-    'sports' = st.multiselect('Make a selection', cat_sports)
-    'opinion' = st.selectbox('Make a selection', opinion)
+    news = st.multiselect('Make a selection', cat_news)
+    business = st.multiselect('Make a selection', cat_business)
+    entertainment = st.multiselect('Make a selection', cat_entertainment)
+    sports = st.multiselect('Make a selection', cat_sports)
+    opinion = st.selectbox('Make a selection', opinion)
     
     jn_num = st.text_input('Enter number')
     jn_submit = st.button('Submit')
     if jn_submit:
         st.session_state['jn_response'] = {'start_date': jn_start_date,
                                            'end_date': jn_end_date,
-                                           'jn_categories': {'news': cat_news, 'business': cat_business, 
-                                                             'sports': cat_sports, 'opinion': cat_opinion},
+                                           'jn_categories': {'news': news, 'business': business, 'entertainment': entertainment,
+                                                             'sports': sports, 'opinion': opinion},
                                            'jn_num': jn_num,
                                           }
 
