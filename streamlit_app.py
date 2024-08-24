@@ -5,7 +5,11 @@ from datetime import datetime, timedelta
 from scraper import ghanaweb_scraper, joynews_scraper, clean_text
 import re
 import nltk
+
+import spacy.cli
+spacy.cli.download("en_core_web_sm")
 import spacy
+
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
