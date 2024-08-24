@@ -3,7 +3,7 @@ pandas
 numpy
 requests
 bs4
-sklearn
+scikit-learn
 nltk
 spacy
 sentence_transformers
