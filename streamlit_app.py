@@ -137,8 +137,8 @@ if start_scraping == True:
     if df_ghanaweb is not None and not df_ghanaweb.empty and df_joynews is not None and not df_joynews.empty:
         articles = pd.concat([df_ghanaweb, df_joynews], axis=0, ignore_index=True)
     
-if df_ghanaweb is not None and not df_ghanaweb.empty:
-    st.write(article.head())
+if articles is not None and not articles.empty:
+    st.write(articles.head())
 
     gw_num = st.session_state['gw_response']['gw_num']
     jn_num = st.session_state['jn_response']['jn_num']
