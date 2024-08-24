@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import os
 from datetime import datetime, timedelta
 from scraper import ghanaweb_scraper, joynews_scraper, clean_text
 import re
