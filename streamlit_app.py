@@ -4,7 +4,7 @@ st.title('Check News Plagiarism')
 
 # Ghanaweb form
 @st.dialog('Ghanaweb')
-with st.form('Ghanaweb'):
+def ghanaweb_form():
     gw_start_date = st.date_input('Start date')
     gw_end_date = st.date_input('End date')
     gw_num = st.text_input('Enter number')
@@ -17,7 +17,7 @@ with st.form('Ghanaweb'):
 
 # Joy News form
 @st.dialog('Joy News')
-with st.form('Joy News Online'):
+def joynews_form():
     jn_start_date = st.date_input('Start date')
     jn_end_date = st.date_input('End date')
     jn_num = st.text_input('Enter number')
