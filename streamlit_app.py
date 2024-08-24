@@ -7,7 +7,7 @@ def ghanaweb_form():
   gw_start_date = st.date_input('Start date')
   gw_end_date = st.date_input('End date')
   gw_num = st.text_input('Enter number')
-  if st.submit('Submit'):
+  if st.button('Submit'):
     st.session_state.gw_response = {'start_date': gw_start_date,
                                     'end_date': gw_end_date,
                                     'gw_num': gw_num,
@@ -19,7 +19,7 @@ def joynews_form():
   jn_start_date = st.date_input('Start date')
   jn_end_date = st.date_input('End date')
   jn_num = st.text_input('Enter number')
-  if st.submit('Submit'):
+  if st.button('Submit'):
     st.session_state.jn_response = {'start_date': jn_start_date,
                                     'end_date': jn_end_date,
                                     'jn_num': jn_num,
