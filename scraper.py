@@ -192,8 +192,19 @@ def joynews_scraper(category, sub_category, end_date):
 
 
 
+
 # Function for preprocessing
+def get_wordnet_pos(word):
+    """Map POS tag to first character lemmatize() accepts"""
+    tag = nltk.pos_tag([word])[0][1][0].upper()
+    tag_dict = {"J": wordnet.ADJ,
+                "N": wordnet.NOUN,
+                "V": wordnet.VERB,
+                "R": wordnet.ADV}
+    return tag_dict.get(tag, wordnet.NOUN)
+
 def clean_text(text):
+    # Convert to lowercase
     text = text.lower()
 
     # Remove HTML tags
@@ -208,10 +219,9 @@ def clean_text(text):
     # Remove stopwords and words with length <= 1
     tokens = [word for word in tokens if word not in stop_words and len(word) > 1]
 
-    # Lemmatization using Spacy
-    lemmatized_tokens = [token.lemma_ for token in nlp(" ".join(tokens))]
+    # Lemmatization using NLTK's WordNetLemmatizer with POS tagging
+    lemmatized_tokens = [lemmatizer.lemmatize(word, get_wordnet_pos(word)) for word in tokens]
 
     # Rejoin tokens into a single string
     cleaned_text = " ".join(lemmatized_tokens)
-
     return cleaned_text
