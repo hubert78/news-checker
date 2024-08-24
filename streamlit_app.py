@@ -35,7 +35,7 @@ def joynews_form():
     if jn_submit:
         st.session_state['jn_response'] = {'start_date': jn_start_date,
                                            'end_date': jn_end_date,
-                                           'jn_categories': jn_categories
+                                           'jn_categories': jn_categories,
                                            'jn_num': jn_num,
                                           }
         st.rerun()
