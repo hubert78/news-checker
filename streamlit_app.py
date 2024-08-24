@@ -18,6 +18,7 @@ def ghanaweb_form():
                                            'gw_categories': gw_categories,
                                            'gw_num': gw_num,
                                           }
+        st.rerun()
 
 # Joy News form
 @st.dialog('Joy News')
@@ -47,6 +48,8 @@ def joynews_form():
                                                              'sports': sports, 'opinion': opinion},
                                            'jn_num': jn_num,
                                           }
+        st.rerun()
+
 
 col1, col2 = st.columns(2)
 with col1:
@@ -59,8 +62,11 @@ with col2:
   if jn_button:
     jn_num = joynews_form()
 
+check_button = st.button('Check for plagiarism')
+    
+
 # Display results
-if 'gw_response' in st.session_state and 'jn_response' in st.session_state:
+if 'gw_response' in st.session_state and 'jn_response' in st.session_state and check_button:
     gw_num = st.session_state['gw_response']['gw_num']
     jn_num = st.session_state['jn_response']['jn_num']
     st.write(int(gw_num) + int(jn_num))
