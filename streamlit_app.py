@@ -3,7 +3,7 @@ import streamlit as st
 st.title('Check News Plagiarism')
 
 # Ghanaweb form
-# @st.dialog('Ghanaweb')
+@st.dialog('Ghanaweb')
 with st.form('Ghanaweb'):
     gw_start_date = st.date_input('Start date')
     gw_end_date = st.date_input('End date')
@@ -16,6 +16,7 @@ with st.form('Ghanaweb'):
                                           }
 
 # Joy News form
+@st.dialog('Joy News')
 with st.form('Joy News Online'):
     jn_start_date = st.date_input('Start date')
     jn_end_date = st.date_input('End date')
