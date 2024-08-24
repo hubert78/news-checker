@@ -28,7 +28,8 @@ if os.path.exists(punkt_path):
     st.write("Punkt tokenizer file found!")
 else:
     st.write("Punkt tokenizer file missing!")
-st.write(nltk.data.path)
+if os.path.exists('./nltk_data/tokenizers/punkt/english.pickle'):
+    print("Punkt tokenizer is in place.")
 
 # Ghanaweb form
 @st.dialog('Ghanaweb')
