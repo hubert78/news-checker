@@ -92,7 +92,7 @@ if start_scraping == True:
     # Scraping news from Ghanaweb
     for category in gw_categories:
         with st.spinner(f'Scraping news from Ghanaweb. Category = {category}'):
-            df = ghanaweb_scrapper(category, gw_end_date, gw_start_date)
+            df = ghanaweb_scraper(category, gw_end_date, gw_start_date)
             if df is not None and not df.empty:
                 df_ghanaweb = pd.concat([df_ghanaweb, df], axis=0, ignore_index=True)
 
