@@ -5,22 +5,13 @@ from datetime import datetime, timedelta
 from scraper import ghanaweb_scraper, joynews_scraper, clean_text
 import re
 import nltk
-import spacy
-try:
-    spacy.load('en_core_web_sm')
-except OSError:
-    subprocess.run([sys.executable, "-m", "spacy", "download", "en_core_web_sm"])
-
-
-from nltk.corpus import stopwords
+from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from sentence_transformers import SentenceTransformer
 from collections import defaultdict
 
-import subprocess
-subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
 
 
 st.title('Check News Plagiarism')
@@ -157,16 +148,6 @@ if start_scraping == True:
 if articles is not None and not articles.empty:
     st.write(articles.head())
     with st.spinner(f'Processing data for plagiarism comparison'):
-        # Download stopwords from NLTK
-        nltk.download('stopwords')
-        nltk.download('punkt')
-        
-        # Load Spacy's English model for lemmatization
-        nlp = spacy.load('en_core_web_sm')
-        
-        # Set of English stopwords
-        stop_words = set(stopwords.words('english'))
-    
         articles['Processed_Content'] = articles['Content'].apply(clean_text)
 
 
