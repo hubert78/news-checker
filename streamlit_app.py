@@ -5,10 +5,12 @@ from datetime import datetime, timedelta
 from scraper import ghanaweb_scraper, joynews_scraper, clean_text
 import re
 import nltk
-
-import spacy.cli
-spacy.cli.download("en_core_web_sm")
 import spacy
+try:
+    spacy.load('en_core_web_sm')
+except OSError:
+    subprocess.run([sys.executable, "-m", "spacy", "download", "en_core_web_sm"])
+
 
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
