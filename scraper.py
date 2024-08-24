@@ -201,37 +201,26 @@ def joynews_scraper(category, sub_category, end_date):
 
 
 
-# download_nltk_data()
+# Set up NLTK data path once
+os.environ['NLTK_DATA'] = './nltk_data'
+nltk.data.path.append('./nltk_data')
 
-# Set of English stopwords
-#stop_words = set(stopwords.words('english'))
+# Initialize stopwords and lemmatizer outside the function
+stop_words = set(stopwords.words('english'))
+lemmatizer = WordNetLemmatizer()
 
-# Initialize WordNet Lemmatizer
-#lemmatizer = WordNetLemmatizer()
-
-
-# Function for preprocessing
+# Helper function to convert POS tags to WordNet POS
 def get_wordnet_pos(word):
     """Map POS tag to first character lemmatize() accepts"""
-    tag = nltk.pos_tag([word])[0][1][0].upper()
+    tag = pos_tag([word])[0][1][0].upper()
     tag_dict = {"J": wordnet.ADJ,
                 "N": wordnet.NOUN,
                 "V": wordnet.VERB,
                 "R": wordnet.ADV}
     return tag_dict.get(tag, wordnet.NOUN)
 
+# Clean text function
 def clean_text(text):
-    os.environ['NLTK_DATA'] = './nltk_data'
-    
-    # Verify that NLTK can access the data
-    nltk.data.path.append('./nltk_data')
-
-    # Set of English stopwords
-    stop_words = set(stopwords.words('english'))
-    
-    # Initialize WordNet Lemmatizer
-    lemmatizer = WordNetLemmatizer()
-
     # Convert to lowercase
     text = text.lower()
 
@@ -242,7 +231,7 @@ def clean_text(text):
     text = re.sub(r'[^a-z\s]', '', text)
 
     # Tokenization (split the text into words)
-    tokens = nltk.word_tokenize(text)
+    tokens = word_tokenize(text)
 
     # Remove stopwords and words with length <= 1
     tokens = [word for word in tokens if word not in stop_words and len(word) > 1]
@@ -252,4 +241,5 @@ def clean_text(text):
 
     # Rejoin tokens into a single string
     cleaned_text = " ".join(lemmatized_tokens)
+    
     return cleaned_text
