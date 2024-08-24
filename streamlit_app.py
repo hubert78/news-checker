@@ -2,7 +2,19 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
-from scraper import ghanaweb_scraper, joynews_scraper
+from scraper import ghanaweb_scraper, joynews_scraper, clean_text
+import re
+import nltk
+import spacy
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+from sentence_transformers import SentenceTransformer
+from collections import defaultdict
+
+import subprocess
+subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
 
 
 st.title('Check News Plagiarism')
@@ -85,7 +97,6 @@ if 'gw_response' in st.session_state and 'jn_response' in st.session_state and c
     elif gw_start > datetime.now().date() or jn_start > datetime.now().date():
         st.info('Start Date cannot be in the future')
     else:
-        st.write(gw_start_date)
         start_scraping = True
 
 
@@ -139,15 +150,80 @@ if start_scraping == True:
     
 if articles is not None and not articles.empty:
     st.write(articles.head())
+    with st.spinner(f'Processing data for plagiarism comparison):
+        # Download stopwords from NLTK
+        nltk.download('stopwords')
+        nltk.download('punkt')
+        
+        # Load Spacy's English model for lemmatization
+        nlp = spacy.load('en_core_web_sm')
+        
+        # Set of English stopwords
+        stop_words = set(stopwords.words('english'))
+    
+        articles['Processed_Content'] = articles['Content'].apply(clean_text)
 
-    gw_num = st.session_state['gw_response']['gw_num']
-    jn_num = st.session_state['jn_response']['jn_num']
-    st.write(int(gw_num) + int(jn_num))
+
+    with st.spinner(f'Checking Similarity'):
+        vectorizer = TfidfVectorizer()
+        tfidf_matrix = vectorizer.fit_transform(articles['Processed_Content'])
+        similarity_matrix = cosine_similarity(tfidf_matrix)
+
+        # Define a threshold for plagiarism
+        threshold = 0.7
+        
+        # Find article pairs with cosine similarity above the threshold
+        plagiarism_pairs = np.argwhere(similarity_matrix > threshold)
+        
+        # Filter out self-pairs (article compared with itself)
+        plagiarism_pairs = [(i, j) for i, j in plagiarism_pairs if i != j]
+        
+        # A dictionary counters for within-source and between-source similarities
+        within_source_pairs = defaultdict(list)
+        between_source_pairs = defaultdict(list)
+        
+        # A dictionary counter to count plagiarism occurrences per category and date
+        category_pairs  = defaultdict(int)
+        source1_date_count = defaultdict(int)
+        source2_date_count = defaultdict(int)
+        
+        # To ensure each pair is counted only once, use a set to track counted pairs
+        seen_pairs = set()
+        
+        # Display potential plagiarism cases
+        for i, j in plagiarism_pairs:
+            # Make sure (i, j) is not counted more than once
+            if (i, j) not in seen_pairs and (j, i) not in seen_pairs:
+                seen_pairs.add((i, j))  # Mark the pair as counted
+                
+                # Check if the articles are from the same source
+                if articles['Source'].iloc[i] == articles['Source'].iloc[j]:
+                    # Group within-source similarities
+                    within_source_pairs[articles['Source'].iloc[i]].append((i, j, similarity_matrix[i, j]))
+                else:
+                    # Group between-source similarities
+                    between_source_pairs[(articles['Source'].iloc[i], articles['Source'].iloc[j])].append((i, j, similarity_matrix[i, j]))
+                    
+                    # Count the number of articles plagiarized in each category
+                    category_i = articles['Category'].iloc[i]
+                    category_j = articles['Category'].iloc[j]
+        
+                    # Increase the plagiarism count for the category
+                    category_pairs[(category_i, category_j)] += 1
+                    
+                    # Count the number of articles plagiarized per each date
+                    date_i = articles['Date Posted'].iloc[i]
+                    date_j = articles['Date Posted'].iloc[j]
+                    
+                    # Increase the plagiarism count for each date
+                    source1_date_count[date_i] += 1
+                    source2_date_count[date_j] += 1
 
 
 
-
-
+if articles is not None and not articles.empty:
+    num_of_articles = len(between_source_pairs['GhanaWeb', 'My Joy Online'])
+    st.header(f"There are {num_of_articles} plagiarized articles between Ghanaweb and My Joyonline")
 
 
 
