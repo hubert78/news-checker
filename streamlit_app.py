@@ -67,9 +67,9 @@ start_scraping = False
 if 'gw_response' in st.session_state and 'jn_response' in st.session_state and check_button:
 
     gw_start = st.session_state['gw_response']['start_date']
-    gw_end_date = st.session_state['gw_response']['end_date']
+    gw_end = st.session_state['gw_response']['end_date']
     jn_start = st.session_state['jn_response']['start_date']
-    jn_end_date = st.session_state['jn_response']['end_date']
+    jn_end = st.session_state['jn_response']['end_date']
     
     gw_start_date = st.session_state['gw_response']['start_date'].strftime('%Y%m%d')
     gw_end_date = st.session_state['gw_response']['end_date'].strftime('%Y%m%d')
@@ -78,9 +78,10 @@ if 'gw_response' in st.session_state and 'jn_response' in st.session_state and c
     gw_categories = st.session_state['gw_response']['categories']
     jn_categories = st.session_state['jn_response']['categories']
     
-    # Check if input Date is valid for scrapping.
+    # Check if input Date is valid for scraping.
     if gw_start < gw_end or jn_start < jn_end:
         st.info('Select an End Date older or equal to Start Date')
+        
     elif gw_start > datetime.now().date() or jn_start > datetime.now().date():
         st.info('Start Date cannot be in the future')
     else:
