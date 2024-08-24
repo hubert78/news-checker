@@ -128,7 +128,7 @@ if start_scraping == True:
         st.info('Failed to scrap news from myjoyonline.com')
 
 
-    if df_ghanaweb is not None and not df_ghanaweb.empty and df_joynews is not None and not df_joynews.empty
+    if df_ghanaweb is not None and not df_ghanaweb.empty and df_joynews is not None and not df_joynews.empty:
         articles = pd.concat([df_ghanaweb, df_joynews], axis=0, ignore_index=True)
     
 if df_ghanaweb is not None and not df_ghanaweb.empty:
