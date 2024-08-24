@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from datetime import datetime, timedelta
+import spacy
 import re
 import nltk
 from nltk.data import find
@@ -198,29 +199,22 @@ def joynews_scraper(category, sub_category, end_date):
 
 
 
+# Set the path to your uploaded spaCy model
+model_path = 'en_core_web_sm'
+nlp = spacy.load(model_path)
 
 
 
-# Set up NLTK data path once
-os.environ['NLTK_DATA'] = './nltk_data'
-nltk.data.path.append('./nltk_data')
+#nlp = spacy.load('/path/to/en_core_web_sm-3.7.1')
 
-# Initialize stopwords and lemmatizer outside the function
-stop_words = set(stopwords.words('english'))
-lemmatizer = WordNetLemmatizer()
-
-# Helper function to convert POS tags to WordNet POS
-def get_wordnet_pos(word):
-    """Map POS tag to first character lemmatize() accepts"""
-    tag = pos_tag([word])[0][1][0].upper()
-    tag_dict = {"J": wordnet.ADJ,
-                "N": wordnet.NOUN,
-                "V": wordnet.VERB,
-                "R": wordnet.ADV}
-    return tag_dict.get(tag, wordnet.NOUN)
-
-# Clean text function
 def clean_text(text):
+    """
+    Function to clean and preprocess text using spaCy.
+    Args:
+        text (str): Input text string to be cleaned.
+    Returns:
+        str: Cleaned and preprocessed text.
+    """
     # Convert to lowercase
     text = text.lower()
 
@@ -230,16 +224,16 @@ def clean_text(text):
     # Remove non-alphabetic characters, except spaces
     text = re.sub(r'[^a-z\s]', '', text)
 
-    # Tokenization (split the text into words)
-    tokens = word_tokenize(text)
+    # Process the text with spaCy
+    doc = nlp(text)
 
-    # Remove stopwords and words with length <= 1
-    tokens = [word for word in tokens if word not in stop_words and len(word) > 1]
-
-    # Lemmatization using NLTK's WordNetLemmatizer with POS tagging
-    lemmatized_tokens = [lemmatizer.lemmatize(word, get_wordnet_pos(word)) for word in tokens]
-
+    # Lemmatize, remove stopwords, and non-alphabetic tokens
+    tokens = [
+        token.lemma_ for token in doc
+        if not token.is_stop and token.is_alpha
+    ]
+    
     # Rejoin tokens into a single string
-    cleaned_text = " ".join(lemmatized_tokens)
+    cleaned_text = " ".join(tokens)
     
     return cleaned_text
