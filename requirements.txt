@@ -5,5 +5,5 @@ requests
 bs4
 scikit-learn
 nltk
-spacy
+spacy==3.5.0
 sentence_transformers
