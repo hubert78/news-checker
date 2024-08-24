@@ -27,7 +27,7 @@ def joynews_form():
 
     jn_start_date = st.date_input('Start date')
     jn_end_date = st.date_input('End date')
-    jn_categories = st.multiselect('Select Categories', cateogories)
+    jn_categories = st.multiselect('Select Categories', categories)
 
     
     jn_num = st.text_input('Enter number')
