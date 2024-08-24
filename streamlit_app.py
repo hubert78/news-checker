@@ -63,11 +63,11 @@ check_button = st.button('Check for plagiarism')
 # Placeholder to start scraping 
 start_scraping = False
 
-# Display results
+# Display results 
 if 'gw_response' in st.session_state and 'jn_response' in st.session_state and check_button:
 
-    gw_start_date = st.session_state['gw_response']['start_date']
-    gw_end_date = st.session_state['gw_response']['end_date']
+    gw_start_date = st.session_state['gw_response']['start_date'].strftime('%Y%m%d')
+    gw_end_date = st.session_state['gw_response']['end_date'].strftime('%Y%m%d')
     jn_start_date = st.session_state['jn_response']['start_date']
     jn_end_date = st.session_state['jn_response']['end_date']
     gw_categories = st.session_state['gw_response']['categories']
