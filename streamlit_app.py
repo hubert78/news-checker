@@ -79,9 +79,10 @@ if 'gw_response' in st.session_state and 'jn_response' in st.session_state and c
     elif gw_start_date > datetime.now().date() or jn_start_date > datetime.now().date():
         st.info('Start Date cannot be in the future')
     else:
+        st.write(gw_start_date)
         start_scraping = True
      
-#if start_scraping = True:
+
     
 
 
