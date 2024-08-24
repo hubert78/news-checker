@@ -150,7 +150,7 @@ if start_scraping == True:
     
 if articles is not None and not articles.empty:
     st.write(articles.head())
-    with st.spinner(f'Processing data for plagiarism comparison):
+    with st.spinner(f'Processing data for plagiarism comparison'):
         # Download stopwords from NLTK
         nltk.download('stopwords')
         nltk.download('punkt')
