@@ -23,6 +23,7 @@ os.environ['NLTK_DATA'] = './nltk_data'
 nltk.data.path.append('./nltk_data')
 stop_words = set(nltk.corpus.stopwords.words('english'))
 st.write(f"Number of stopwords: {len(stop_words)}")
+st.write(nltk.data.path)
 
 # Ghanaweb form
 @st.dialog('Ghanaweb')
