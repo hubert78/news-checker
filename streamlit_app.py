@@ -25,7 +25,7 @@ with col1:
     
 with col2:
   jn_button = st.button('Joy News')
-  in jn_button:
+  if jn_button:
     jn_num = joynews_form()
 
 if gw_button and jn_button:
