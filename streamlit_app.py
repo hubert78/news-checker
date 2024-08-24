@@ -16,6 +16,13 @@ from collections import defaultdict
 
 st.title('Check News Plagiarism')
 
+os.environ['NLTK_DATA'] = './nltk_data'
+
+# Verify that NLTK can access the data
+nltk.data.path.append('./nltk_data')
+stop_words = set(nltk.corpus.stopwords.words('english'))
+st.write(f"Number of stopwords: {len(stop_words)}")
+
 # Ghanaweb form
 @st.dialog('Ghanaweb')
 def ghanaweb_form():
