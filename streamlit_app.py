@@ -26,7 +26,7 @@ def joynews_form():
     cat_business = ["economy", "energy", "finance", "investments", "mining", "agribusiness", "real-estate", "stocks", "telecom", "aviation", "banking", "technology-business"]
     cat_entertainment = ["movies", "music", "radio-tv", "stage", "art-design", "books"]
     cat_sports = ["football", "boxing", "athletics", "tennis", "golf", "other-sports"]
-    cat_opinion = [""]
+    cat_opinion = ["Opinion", None]
     
     
     jn_start_date = st.date_input('Start date')
