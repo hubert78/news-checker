@@ -1,4 +1,9 @@
 import streamlit as st
+import pandas as pd
+import numpy as np
+from datetime import datetime, timedelta
+from scraper import ghanaweb_scraper, joynews_scraper
+
 
 st.title('Check News Plagiarism')
 
@@ -57,6 +62,43 @@ check_button = st.button('Check for plagiarism')
 
 # Display results
 if 'gw_response' in st.session_state and 'jn_response' in st.session_state and check_button:
+    gw_start_date = st.session_state['gw_response']['start_date']
+    gw_end_date = st.session_state['gw_response']['end_date']
+
+    if gw_start_date < gw_end_date:
+        st.write('Select an End Date older or equal to Start Date')
+        st.rerun()
+        
+    
+
+
+
+    
     gw_num = st.session_state['gw_response']['gw_num']
     jn_num = st.session_state['jn_response']['jn_num']
     st.write(int(gw_num) + int(jn_num))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
