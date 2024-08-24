@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 from datetime import datetime, timedelta
 import re
 import nltk
+from nltk.data import find
 from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
@@ -197,11 +198,19 @@ def joynews_scraper(category, sub_category, end_date):
 
 
 
-# Download NLTK resources
-#nltk.download('stopwords')
-#nltk.download('punkt')
-#nltk.download('wordnet')
-#nltk.download('averaged_perceptron_tagger')
+def download_nltk_data():
+    try:
+        find('corpora/stopwords.zip')
+        find('tokenizers/punkt.zip')
+        find('corpora/wordnet.zip')
+        find('taggers/averaged_perceptron_tagger.zip')
+    except LookupError:
+        nltk.download('stopwords')
+        nltk.download('punkt')
+        nltk.download('wordnet')
+        nltk.download('averaged_perceptron_tagger')
+
+# download_nltk_data()
 
 # Set of English stopwords
 #stop_words = set(stopwords.words('english'))
@@ -221,6 +230,14 @@ def get_wordnet_pos(word):
     return tag_dict.get(tag, wordnet.NOUN)
 
 def clean_text(text):
+    download_nltk_data()
+
+    # Set of English stopwords
+    stop_words = set(stopwords.words('english'))
+    
+    # Initialize WordNet Lemmatizer
+    lemmatizer = WordNetLemmatizer()
+
     # Convert to lowercase
     text = text.lower()
 
