@@ -5,6 +5,11 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from datetime import datetime, timedelta
+import re
+import nltk
+from nltk.corpus import stopwords, wordnet
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
 
 
 # Function to scrap news from Ghanaweb
@@ -191,6 +196,18 @@ def joynews_scraper(category, sub_category, end_date):
 
 
 
+
+# Download NLTK resources
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+
+# Set of English stopwords
+stop_words = set(stopwords.words('english'))
+
+# Initialize WordNet Lemmatizer
+lemmatizer = WordNetLemmatizer()
 
 
 # Function for preprocessing
