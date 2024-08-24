@@ -8,7 +8,7 @@ def ghanaweb_form():
   gw_end_date = st.date_input('End date')
 
 
-@st.experimental_dialog('Ghanaweb')
+@st.experimental_dialog('Joy News Online')
 def joynews_form():
   gw_start_date = st.date_input('Start date')
   gw_end_date = st.date_input('End date')
@@ -19,4 +19,5 @@ with col1:
     ghanaweb_form()
     
 with col2:
-  joynews_form()
+  if st.button('Joy News'):
+    joynews_form()
