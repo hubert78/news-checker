@@ -81,13 +81,59 @@ if 'gw_response' in st.session_state and 'jn_response' in st.session_state and c
     else:
         st.write(gw_start_date)
         start_scraping = True
-     
 
+
+
+df_ghanaweb = pd.DataFrame(columns=["Source", "Category", "Date Posted", "Title", "URL", "Content"])
+df_joynews = pd.DataFrame(columns=["Source", "Category", "Date Posted", "Title", "URL", "Content"])
+articles = pd.DataFrame(columns=["Source", "Category", "Date Posted", "Title", "URL", "Content"])
+
+if start_scraping = True:
+    # Scraping news from Ghanaweb
+    for category in gw_categories:
+        with st.spinner(f'Scraping news from Ghanaweb. Category = {category}'):
+            df = ghanaweb_scrapper(category, gw_end_date, gw_start_date)
+            if df is not None and not df.empty:
+                df_ghanaweb = pd.concat([df_ghanaweb, df], axis=0, ignore_index=True)
+
+    # Remove duplicated rows with the same URL
+    if df_ghanaweb is not None and not df_ghanaweb.empty:
+        df_ghanaweb = df_ghanaweb.drop_duplicates(subset=['URL'])
+        st.info('Ghanaweb scraping complete.')
+    else:
+        st.info('Failed to scrap news from ghanaweb.com')
+
+
+    # Scraping news from Joynews
+    categories = {
+        "news": ["national", "politics", "crime", "africa" "regional", "technology", "oddly-enough", "diaspora", "international", "health", "education", "obituary"],
+        "business": ["economy", "energy", "finance", "investments", "mining", "agribusiness", "real-estate", "stocks", "telecom", "aviation", "banking", "technology-business"],
+        "entertainment": ["movies", "music", "radio-tv", "stage", "art-design", "books"],
+        "sports": ["football", "boxing", "athletics", "tennis", "golf", "other-sports"],
+        "opinion": [""],
+    }
     
+    for category in categories:
+        if category in jn_categories:
+            with st.spinner(f'Scraping news from MyJoyOnline. Category = {category}'):
+                for sub_category in categories[category]:
+                    df = joynews_scraper(category, sub_category, jn_end_date)
+                    if df is not None and not df.empty:
+                        df_joynews = pd.concat([df_joynews, df], axis=0, ignore_index=True)
+
+    if df_joynews is not None and not df_joynews.empty:
+        df_joynews = df_joynews.drop_duplicates(subset=['URL'])
+        st.info('MyJoyOnline scraping complete.')
+    else:
+        st.info('Failed to scrap news from myjoyonline.com')
 
 
-
+    if df_ghanaweb is not None and not df_ghanaweb.empty and df_joynews is not None and not df_joynews.empty
+        articles = pd.concat([df_ghanaweb, df_joynews], axis=0, ignore_index=True)
     
+if df_ghanaweb is not None and not df_ghanaweb.empty:
+    st.write(article.head())
+
     gw_num = st.session_state['gw_response']['gw_num']
     jn_num = st.session_state['jn_response']['jn_num']
     st.write(int(gw_num) + int(jn_num))
