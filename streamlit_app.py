@@ -20,7 +20,7 @@ def ghanaweb_form():
     if gw_submit:
         st.session_state['gw_response'] = {'start_date': gw_start_date,
                                            'end_date': gw_end_date,
-                                           'gw_categories': gw_categories,
+                                           'categories': gw_categories,
                                            'gw_num': gw_num,
                                           }
         st.rerun()
@@ -40,7 +40,7 @@ def joynews_form():
     if jn_submit:
         st.session_state['jn_response'] = {'start_date': jn_start_date,
                                            'end_date': jn_end_date,
-                                           'jn_categories': jn_categories,
+                                           'categories': jn_categories,
                                            'jn_num': jn_num,
                                           }
         st.rerun()
@@ -58,18 +58,30 @@ with col2:
     jn_num = joynews_form()
 
 check_button = st.button('Check for plagiarism')
-    
+
+
+# Placeholder to start scraping 
+start_scraping = False
 
 # Display results
 if 'gw_response' in st.session_state and 'jn_response' in st.session_state and check_button:
 
     gw_start_date = st.session_state['gw_response']['start_date']
     gw_end_date = st.session_state['gw_response']['end_date']
-    st.write(f'Start date: {gw_start_date}')
-
-    if gw_start_date < gw_end_date:
-        st.write('Select an End Date older or equal to Start Date')
+    jn_start_date = st.session_state['jn_response']['start_date']
+    jn_end_date = st.session_state['jn_response']['end_date']
+    gw_categories = st.session_state['gw_response']['categories']
+    jn_categories = st.session_state['jn_response']['categories']
+    
+    # Check if input Date is valid for scrapping.
+    if gw_start_date < gw_end_date or jn_start_date < jn_end_date:
+        st.info('Select an End Date older or equal to Start Date')
+    elif gw_start_date > datetime.now() or jn_start_date > datetime.now():
+        st.info('Start Date cannot be in the future')
+    else:
+        start_scraping = True
      
+#if start_scraping = True:
     
 
 
