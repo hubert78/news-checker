@@ -88,7 +88,7 @@ df_ghanaweb = pd.DataFrame(columns=["Source", "Category", "Date Posted", "Title"
 df_joynews = pd.DataFrame(columns=["Source", "Category", "Date Posted", "Title", "URL", "Content"])
 articles = pd.DataFrame(columns=["Source", "Category", "Date Posted", "Title", "URL", "Content"])
 
-if start_scraping = True:
+if start_scraping == True:
     # Scraping news from Ghanaweb
     for category in gw_categories:
         with st.spinner(f'Scraping news from Ghanaweb. Category = {category}'):
