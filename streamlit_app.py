@@ -37,4 +37,6 @@ with col2:
     jn_num = joynews_form()
 
 if 'gw_response' in st.session_state and 'jn_response' in st.session_state:
+  gw_num = gw_response['gw_num']
+  jn_num = jn_response['jn_num']
   st.write(int(gw_num) + int(jn_num))
