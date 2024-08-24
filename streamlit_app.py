@@ -23,6 +23,11 @@ os.environ['NLTK_DATA'] = './nltk_data'
 nltk.data.path.append('./nltk_data')
 stop_words = set(nltk.corpus.stopwords.words('english'))
 st.write(f"Number of stopwords: {len(stop_words)}")
+punkt_path = os.path.join('./nltk_data', 'tokenizers', 'punkt', 'english.pickle')
+if os.path.exists(punkt_path):
+    st.write("Punkt tokenizer file found!")
+else:
+    st.write("Punkt tokenizer file missing!")
 st.write(nltk.data.path)
 
 # Ghanaweb form
