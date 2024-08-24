@@ -6,4 +6,5 @@ bs4
 scikit-learn
 nltk
 spacy
+thinc
 sentence_transformers
