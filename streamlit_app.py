@@ -6,12 +6,14 @@ st.title('Check News Plagiarism')
 def ghanaweb_form():
   gw_start_date = st.date_input('Start date')
   gw_end_date = st.date_input('End date')
+  gw_num = st.text_input('Enter number')
 
 
 @st.experimental_dialog('Joy News Online')
 def joynews_form():
-  gw_start_date = st.date_input('Start date')
-  gw_end_date = st.date_input('End date')
+  jn_start_date = st.date_input('Start date')
+  jn_end_date = st.date_input('End date')
+  jn_num = st.text_input('Enter number')
 
 col1, col2 = st.columns(2)
 with col1:
@@ -21,3 +23,6 @@ with col1:
 with col2:
   if st.button('Joy News'):
     joynews_form()
+
+
+st.write(int(gw_num) + int(jn_num))
