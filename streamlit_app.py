@@ -63,7 +63,13 @@ check_button = st.button('Check for plagiarism')
 # Display results
 if 'gw_response' in st.session_state and 'jn_response' in st.session_state and check_button:
 
-        
+    gw_start_date = st.session_state['gw_response']['start_date']
+    gw_end_date = st.session_state['gw_response']['end_date']
+    st.write(f'Start date: {gw_start_date}')
+
+    if gw_start_date < gw_end_date:
+        st.write('Select an End Date older or equal to Start Date')
+     
     
 
 
