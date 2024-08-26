@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import os
 from datetime import datetime, timedelta
-from collections import defaultdict
+#from collections import defaultdict
 import time
 
 from scraper import ghanaweb_multi_scraper, joynews_multi_scraper, modernghana_multi_scraper, check_duplicates
