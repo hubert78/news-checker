@@ -8,7 +8,7 @@ import time
 
 from scraper import ghanaweb_multi_scraper, joynews_multi_scraper, modernghana_multi_scraper, check_duplicates
 from streamlit_helper import pop_up, get_selected_data
-from similarity import clean_text, cosine_check, check_similarity_scores
+from similarity import cosine_check, check_similarity_scores
 
 
 
