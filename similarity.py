@@ -16,35 +16,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 
-# Set the path to your uploaded spaCy model
-model_path = 'en_core_web_sm'
-nlp = spacy.load(model_path)
-#nlp = spacy.load('/path/to/en_core_web_sm-3.7.1')
 
-def clean_text(text):
-
-    # Convert to lowercase
-    text = text.lower()
-
-    # Remove HTML tags
-    text = re.sub(r'<.*?>', '', text)
-
-    # Remove non-alphabetic characters, except spaces
-    text = re.sub(r'[^a-z\s]', '', text)
-
-    # Process the text with spaCy
-    doc = nlp(text)
-
-    # Lemmatize, remove stopwords, and non-alphabetic tokens
-    tokens = [
-        token.lemma_ for token in doc
-        if not token.is_stop and token.is_alpha
-    ]
-
-    # Rejoin tokens into a single string
-    cleaned_text = " ".join(tokens)
-    
-    return cleaned_text
 
 
 
