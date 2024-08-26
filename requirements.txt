@@ -5,6 +5,4 @@ requests
 bs4
 scikit-learn
 nltk
-spacy
-thinc
-Optimizer
+
