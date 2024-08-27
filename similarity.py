@@ -1,29 +1,61 @@
+import streamlit as st
 import pandas as pd
 import numpy as np
 import os
 import re
 import nltk
-#import spacy
+import spacy
 from nltk.data import find
 from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-#from collections import defaultdict
+from collections import defaultdict
+import plotly.express as px
 
 
 
 
 
+# Set the path to your uploaded spaCy model
+model_path = 'en_core_web_sm'
+nlp = spacy.load(model_path)
+#nlp = spacy.load('/path/to/en_core_web_sm-3.7.1')
 
+def clean_text(text):
+
+    # Convert to lowercase
+    text = text.lower()
+
+    # Remove HTML tags
+    text = re.sub(r'<.*?>', '', text)
+
+    # Remove non-alphabetic characters, except spaces
+    text = re.sub(r'[^a-z\s]', '', text)
+
+    # Process the text with spaCy
+    doc = nlp(text)
+
+    # Lemmatize, remove stopwords, and non-alphabetic tokens
+    tokens = [
+        token.lemma_ for token in doc
+        if not token.is_stop and token.is_alpha
+    ]
+
+    # Rejoin tokens into a single string
+    cleaned_text = " ".join(tokens)
+    
+    return cleaned_text
 
 
 
 # Function for consine_similarity check
-def cosine_check(df):
+@st.cache_data
+def check_similarity(df):
+    df['Processed_Content'] = df['Content'].apply(clean_text)
     vectorizer = TfidfVectorizer()
-    tfidf_matrix = vectorizer.fit_transform(df)
+    tfidf_matrix = vectorizer.fit_transform(df['Processed_Content'])
     similarity_matrix = cosine_similarity(tfidf_matrix)
     return similarity_matrix
 
@@ -94,3 +126,31 @@ def check_similarity_scores(threshold, similarity_matrix, df):
         'source2_date_count': source2_date_count,
     }
     return data_scores
+
+
+
+def create_similarity_df(source:str, pairs:defaultdict, df:pd) ->pd:
+    data = []
+    for i, j, similarity in pairs:
+        data.append({
+            "Similarity Score (%)": f"{similarity * 100:.2f}%",
+            "Article 1 Title": df['Title'].iloc[i],
+            "Article 2 Title": df['Title'].iloc[j],
+            "Article 1 URL": df['URL'].iloc[i],
+            "Article 2 URL": df['URL'].iloc[j],
+        })
+    return pd.DataFrame(data)
+
+
+
+
+
+
+def pie_chart(pie_source, source):
+    fig = px.pie(
+        names = list(pie_source.keys()), 
+        values=list(pie_source.values()), 
+        title=f"{source}",
+        hole=0.4,
+    )
+    st.plotly_chart(fig)
