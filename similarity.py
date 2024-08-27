@@ -4,7 +4,7 @@ import numpy as np
 import os
 import re
 import nltk
-import spacy
+#import spacy
 from nltk.data import find
 from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize
