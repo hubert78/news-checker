@@ -17,10 +17,17 @@ import plotly.express as px
 
 
 
-
 # Set up NLTK data path once
-os.environ['NLTK_DATA'] = './nltk_data'
-nltk.data.path.append('./nltk_data')
+nltk_data_path = os.path.join(os.getcwd(), 'nltk_data')
+os.makedirs(nltk_data_path, exist_ok=True)
+os.environ['NLTK_DATA'] = nltk_data_path
+nltk.data.path.append(nltk_data_path)
+
+# Download required NLTK resources
+nltk.download('stopwords', download_dir=nltk_data_path)
+nltk.download('punkt', download_dir=nltk_data_path)
+nltk.download('wordnet', download_dir=nltk_data_path)
+nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_path)
 
 # Initialize stopwords and lemmatizer outside the function
 stop_words = set(stopwords.words('english'))
@@ -60,7 +67,6 @@ def clean_text(text):
     cleaned_text = " ".join(lemmatized_tokens)
     
     return cleaned_text
-
 
 
 # Function for consine_similarity check
