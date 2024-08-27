@@ -16,14 +16,13 @@ import plotly.express as px
 
 
 
-
 # Set up NLTK data path once
 nltk_data_path = os.path.join(os.getcwd(), 'nltk_data')
 os.makedirs(nltk_data_path, exist_ok=True)
 os.environ['NLTK_DATA'] = nltk_data_path
 nltk.data.path.append(nltk_data_path)
 
-# Download required NLTK resources
+# Download required NLTK resources if not already downloaded
 nltk.download('stopwords', download_dir=nltk_data_path)
 nltk.download('punkt', download_dir=nltk_data_path)
 nltk.download('wordnet', download_dir=nltk_data_path)
@@ -67,7 +66,6 @@ def clean_text(text):
     cleaned_text = " ".join(lemmatized_tokens)
     
     return cleaned_text
-
 
 # Function for consine_similarity check
 @st.cache_data
