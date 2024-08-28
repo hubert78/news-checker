@@ -5,5 +5,5 @@ This is a streamlit app to scrap and check the plagiarism between two news websi
 
 
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://news-checker.streamlit.app/)
+(Application can be accessed here)[http://98.82.9.62:8501/]
 
