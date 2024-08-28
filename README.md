@@ -5,5 +5,5 @@ This is a streamlit app to scrap and check the plagiarism between two news websi
 
 
 
-(Application can be accessed here)[http://98.82.9.62:8501/]
+[Application can be accessed here](http://98.82.9.62:8501/)
 
