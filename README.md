@@ -1,4 +1,4 @@
-# News Checker
+# News Plagiarism Checker
 
 This is a streamlit application that dynamically scrapes news articles for a given date and checks for plagiarism between five of the most popular news websites in Ghana. This web application is hoste on Amazon EC2 and can be [accessed here](http://98.82.9.62:8501/)
 
